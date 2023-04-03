@@ -1,3 +1,4 @@
+.DS_Store
 .history
 *.ipynb
 ./logs*
@@ -141,7 +142,10 @@ dmypy.json
 tb_logs/
 .vscode
 logs/
+logs/*/
 models/
+models/*/
+data/*/
 *.pyc
 debugs/
 *.c
