@@ -1,3 +1,6 @@
+*.npy
+mlruns/*/
+output-dir/*/
 .DS_Store
 .history
 *.ipynb

@@ -72,30 +72,33 @@ def get_backbone(name: str, **kwargs) -> torch.nn.Module:
 
 def run_single(cfg, method, logger_save_dir):
 
+    print(logger_save_dir)
     logger = TensorBoardLogger(cfg.LOG_DIR, name=logger_save_dir)
     mlflow_logger = MLFlowLogger(experiment_name="default")
 
     loggers = [logger, mlflow_logger]
+    print(logger.log_dir)
 
     checkpoint_callback = ModelCheckpoint(
-        dirpath=os.path.join(logger.log_dir, "checkpoints"),
-        filename="{epoch}",
-        monitor=cfg.SOLVER.MONITOR_METRIC_NAME,
-        mode=cfg.SOLVER.MONITOR_METRIC_MODE,
-        verbose=True,
+    dirpath=os.path.join(logger.log_dir, "checkpoints"),
+    filename="{epoch}",
+    monitor=cfg.SOLVER.MONITOR_METRIC_NAME,
+    mode=cfg.SOLVER.MONITOR_METRIC_MODE,
+    verbose=True,
     )
 
     periodic_checkpointer = ModelCheckpointPeriodic(
-        dirname=os.path.join(logger.log_dir, "auto_checkpoints"),
-        filename_prefix="checkpoint",
-        n_saved=1,
-        save_interval=1,
+    dirname=os.path.join(logger.log_dir, "auto_checkpoints"),
+    filename_prefix="checkpoint",
+    n_saved=1,
+    save_interval=1,
     )
 
     dm = init_dataset(
         cfg.DATASETS.NAMES, cfg=cfg, num_workers=cfg.DATALOADER.NUM_WORKERS
     )
     dm.setup()
+
     test_dataloader = None
 
     trainer = pl.Trainer(
@@ -136,8 +139,8 @@ def run_single(cfg, method, logger_save_dir):
         )
         trainer.test(model=method, test_dataloaders=val_dataloader)
         method.hparams.MODEL.USE_CENTROIDS = not method.hparams.MODEL.USE_CENTROIDS
-        trainer.test(model=method, test_dataloaders=val_dataloader)
-        method.hparams.MODEL.USE_CENTROIDS = not method.hparams.MODEL.USE_CENTROIDS
+        #trainer.test(model=method, test_dataloaders=val_dataloader)
+        #method.hparams.MODEL.USE_CENTROIDS = not method.hparams.MODEL.USE_CENTROIDS
     else:
         if cfg.MODEL.RESUME_TRAINING:
             method = method.load_from_checkpoint(
