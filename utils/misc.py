@@ -99,7 +99,8 @@ def run_single(cfg, method, logger_save_dir):
     test_dataloader = None
 
     trainer = pl.Trainer(
-        gpus=cfg.GPU_IDS,
+        #gpus=cfg.GPU_IDS,
+        gpus=0, #modified by masa8 to use cpu
         max_epochs=cfg.SOLVER.MAX_EPOCHS,
         logger=loggers,
         fast_dev_run=False,

@@ -76,7 +76,9 @@ class ModelBase(pl.LightningModule):
         d_model = self.hparams.MODEL.BACKBONE_EMB_SIZE
         self.xent = CrossEntropyLabelSmooth(num_classes=self.hparams.num_classes)
         self.center_loss = CenterLoss(
-            num_classes=self.hparams.num_classes, feat_dim=d_model
+            num_classes=self.hparams.num_classes,
+            feat_dim=d_model,
+            use_gpu=False  #Added by masa8 to use cpu
         )
         self.center_loss_weight = self.hparams.SOLVER.CENTER_LOSS_WEIGHT
 
