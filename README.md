@@ -11,7 +11,7 @@
     - ./models/resnet50-19c8e357.pth
        
 ### How to run?
-docker build -t ctl .
+docker build -t ctl . ¥
 docker docker run -it ctl:latest python3 inference/create_embeddings.py --config_file="configs/256_resnet50.yml" DATASETS.ROOT_DIR './data/market1501/bounding_box_train/' TEST.IMS_PER_BATCH 1 OUTPUT_DIR '.' TEST.ONLY_TEST True MODEL.PRETRAIN_PATH './models/market1501_resnet50_256_128_epoch_120.ckpt'
 
 docker docker run -it ctl:latest python3 inference/get_similar.py --config_file="configs/320_resnet50_ibn_a.yml" --gallery_data='.' --normalize_features --topk=10 DATASETS.ROOT_DIR './data/market1501/query/' TEST.IMS_PER_BATCH 1 OUTPUT_DIR 'output-dir' TEST.ONLY_TEST True MODEL.PRETRAIN_PATH './models/market1501_resnet50_256_128_epoch_120.ckpt'  SOLVER.DISTANCE_FUNC 'cosine'
