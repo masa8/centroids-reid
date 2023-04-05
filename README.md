@@ -5,9 +5,10 @@
 ### How to setup?
  - Add ./data/market1501
  - Add ./logs/
- - Add ./models/market1501_resnet50_256_128_epoch_120.ckpt.  
-       ./models/r50_ibn_a.pth.  
-       ./models/resnet50-19c8e357.pth.  
+ - Add 
+    - ./models/market1501_resnet50_256_128_epoch_120.ckpt.  
+    - ./models/r50_ibn_a.pth.  
+    - ./models/resnet50-19c8e357.pth.  
        
 ### How to run?
 docker build -t ctl .
