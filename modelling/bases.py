@@ -172,7 +172,7 @@ class ModelBase(pl.LightningModule):
     def validation_step(self, batch, batch_idx):
         self.backbone.eval()
         self.bn.eval()
-        x, class_labels, camid, idx = batch
+        x, class_labels, camid, idx = batch, torch.tensor((1)), torch.tensor((1)), torch.tensor((1))
         with torch.no_grad():
             _, emb = self.backbone(x)
             emb = self.bn(emb)
@@ -386,7 +386,7 @@ class ModelBase(pl.LightningModule):
         return masks, labels_list_copy
 
     @rank_zero_only
-    def test_step(self, batch, batch_idx):
+    def test_step(self, batch, batch_idx=1):
         ret = self.validation_step(batch, batch_idx)
         return ret
 

@@ -108,7 +108,7 @@ def run_single(cfg, method, logger_save_dir):
         logger=loggers,
         fast_dev_run=False,
         check_val_every_n_epoch=cfg.SOLVER.EVAL_PERIOD,
-        accelerator=cfg.SOLVER.DIST_BACKEND,
+        accelerator=None, #cfg.SOLVER.DIST_BACKEND, updated by masa8
         num_sanity_val_steps=0,
         replace_sampler_ddp=False,
         checkpoint_callback=checkpoint_callback,

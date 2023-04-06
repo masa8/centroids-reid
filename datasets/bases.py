@@ -436,8 +436,10 @@ class BaseDatasetLabelled(Dataset):
             sample = self.transform(sample)
 
         if self.return_paths:
+            print('+++',(sample,target,camid,path))
             return sample, target, camid, path
         else:
+            print(';;;',(sample,target,camid,idx))
             return sample, target, camid, idx
 
     def __len__(self):
