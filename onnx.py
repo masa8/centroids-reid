@@ -14,19 +14,11 @@ from config import cfg
 from datasets.market1501 import Market1501
 def main(args):
     
-    cfg.merge_from_list(args.opts)
-    val_loader = make_inference_data_loader(cfg, './data/market1501/query', ImageDataset)
-    print("len of val_loader", len(val_loader), type(val_loader))
-    for pos, x in enumerate(val_loader):
-        print("++++",x)
-        #print(x[0].shape, #torch.Size([11, 3, 256, 128])  data
-        #      x[1],       #('', '', '', '', '', '', '', '', '', '', '') _
-        #      x[2])       # ('./data/market1501/query/0003_c4s6_015641_00.jpg',,,,) filename
 
     model = CTLModel.load_from_checkpoint(args.input_file)
     model.forward = model.test_step
     input_sample=torch.randn((args.batch_size,3,256,128))
-    dynamic_axes = {'image': {0: '-1'}, 'class': {0: '-1'}}
+    dynamic_axes = {'input': {0: 'batch', 2: 'height', 3: 'width'}}
     torch.onnx.export(model, 
             input_sample, 
             args.output_file, 

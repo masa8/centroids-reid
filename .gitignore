@@ -1,3 +1,4 @@
+core/
 *.onnx
 *.npy
 mlruns/*/
