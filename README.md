@@ -19,10 +19,10 @@ docker docker run -it ctl:latest python3 inference/get_similar.py --config_file=
  
 ### get result from output-dir
  
-docker ps to check ID on <host-instance>
-docker cp ID:/path/to/file/you/want . on <host-instance>
-gcloud compute scp <host-instance>:/path/to/file/you/want .
-
+docker ps to check ID on \<host-instance\>   
+docker cp ID:/path/to/file/you/want . on \<host-instance\>   
+gcloud compute scp \<host-instance\>:/path/to/file/you/want  
+ 
 
 # On the Unreasonable Effectiveness of Centroids in Image Retrieval
 
