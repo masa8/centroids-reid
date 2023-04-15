@@ -23,13 +23,18 @@ from .visrank import visualize_ranked_results
 
 
 def get_euclidean(x, y, **kwargs):
+    print("get_euc")
+    print(x.shape, y.shape)
+    
     m = x.shape[0]
     n = y.shape[0]
+
     distmat = (
         torch.pow(x, 2).sum(dim=1, keepdim=True).expand(m, n)
         + torch.pow(y, 2).sum(dim=1, keepdim=True).expand(n, m).t()
     )
     distmat.addmm_(1, -2, x, y.t())
+    print(distmat.shape)
     return distmat
 
 
@@ -41,10 +46,16 @@ def cosine_similarity(
     Value == 1 means the same vector
     Value == 0 means perpendicular vectors
     """
+    print("get_cos")
+    print(x.shape, y.shape)
+    print("X", x)
+    print("Y", y)
+
     x_n, y_n = x.norm(dim=1)[:, None], y.norm(dim=1)[:, None]
     x_norm = x / torch.max(x_n, eps * torch.ones_like(x_n))
     y_norm = y / torch.max(y_n, eps * torch.ones_like(y_n))
     sim_mt = torch.mm(x_norm, y_norm.transpose(0, 1))
+    print(sim_mt.shape, sim_mt)
     return sim_mt
 
 

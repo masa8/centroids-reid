@@ -105,11 +105,14 @@ def _inference(model, batch, use_cuda, normalize_with_bn=True):
     model.eval()
     with torch.no_grad():
         data, _, filename = batch
+        #print("input",data.shape)
+        #print(data[0], filename[0])
         _, global_feat = model.backbone(
             data.cuda() if use_cuda else data
         )
         if normalize_with_bn:
             global_feat = model.bn(global_feat)
+        #print(global_feat, filename)
         return global_feat, filename
 
 
