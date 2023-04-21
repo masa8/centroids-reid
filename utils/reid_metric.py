@@ -25,11 +25,13 @@ from .visrank import visualize_ranked_results
 def get_euclidean(x, y, **kwargs):
     m = x.shape[0]
     n = y.shape[0]
+    print(m,n)
     distmat = (
         torch.pow(x, 2).sum(dim=1, keepdim=True).expand(m, n)
         + torch.pow(y, 2).sum(dim=1, keepdim=True).expand(n, m).t()
     )
     distmat.addmm_(1, -2, x, y.t())
+    print(distmat)
     return distmat
 
 
@@ -55,8 +57,11 @@ def get_cosine(x: torch.Tensor, y: torch.Tensor, eps: float = 1e-12) -> torch.Te
     -> cosine_distance = abs(-cosine_distance) to make it
     similar in behaviour to euclidean distance
     """
+    print(x.shape, y.shape)
     sim_mt = cosine_similarity(x, y, eps)
-    return torch.abs(1 - sim_mt).clamp(min=eps)
+    out = torch.abs(1 - sim_mt).clamp(min=eps)
+    print(out.shape)
+    return out
 
 
 def get_dist_func(func_name="euclidean"):

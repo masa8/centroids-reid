@@ -86,7 +86,7 @@ if __name__ == "__main__":
     embeddings, paths = run_inference(
         model, val_loader, cfg, print_freq=args.print_freq, use_cuda=False
     )
-
+    print(embeddings, paths)
     ### Load gallery data
     LOAD_PATH = Path(args.gallery_data)
     embeddings_gallery = torch.from_numpy(

@@ -145,6 +145,7 @@ def create_pid_path_index(
 
 
 def calculate_centroids(embeddings, pid_path_index):
+
     pids_centroids_inds = []
     centroids = []
     for pid, indices in pid_path_index.items():
