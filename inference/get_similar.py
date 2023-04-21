@@ -93,14 +93,18 @@ if __name__ == "__main__":
         np.load(LOAD_PATH / "embeddings.npy", allow_pickle=True)
     )
     paths_gallery = np.load(LOAD_PATH / "paths.npy", allow_pickle=True)
-
+    #print(embeddings.shape)
+    #print(embeddings)a
+    #print(embeddings_gallery.shape, embeddings_gallery, paths_gallery)
     if args.normalize_features:
+        #print("norm")
         embeddings_gallery = torch.nn.functional.normalize(
             embeddings_gallery, dim=1, p=2
         )
         embeddings = torch.nn.functional.normalize(
             torch.from_numpy(embeddings), dim=1, p=2
         )
+        #print(embeddings_gallery)
     else:
         embeddings = torch.from_numpy(embeddings)
 
@@ -114,7 +118,9 @@ if __name__ == "__main__":
     log.info("Calculating distance and getting the most similar ids per query")
     dist_func = get_dist_func(cfg.SOLVER.DISTANCE_FUNC)
     distmat = dist_func(x=embeddings, y=embeddings_gallery).cpu().numpy()
+    print(distmat)
     indices = np.argsort(distmat, axis=1)
+    print(indices)
 
     ### Constrain the results to only topk most similar ids
     indices = indices[:, : args.topk] if args.topk else indices

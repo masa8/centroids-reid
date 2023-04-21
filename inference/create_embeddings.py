@@ -28,7 +28,7 @@ log = logging.getLogger(__name__)
 ### Functions used to extract pair_id
 exctract_func = (
     #lambda x: (x).rsplit(".", 1)[0].rsplit("_", 1)[0]
-    lambda x: (x).rsplit("/", 4)[4].rsplit("_", 1)[0]
+    lambda x: (x).rsplit("/", 4)[4].rsplit("_", 3)[0]
 )  ## To extract pid from filename. Example: /path/to/dir/product001_04.jpg -> pid = product001
 #exctract_func = lambda x: Path(
 #    x
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     log.info("Creating centroids")
     if cfg.MODEL.USE_CENTROIDS:
         pid_path_index = create_pid_path_index(paths=paths, func=exctract_func)
-        print(paths, pid_path_index)
+        print(pid_path_index, paths)
         embeddings, paths = calculate_centroids(embeddings, pid_path_index)
 
     ### Save
